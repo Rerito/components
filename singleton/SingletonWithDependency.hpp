@@ -77,7 +77,7 @@ template <typename T>
 struct DependencyRegistrar {
     template <typename U>
     void operator()(details::wrapped_type<U>) {
-        auto& force_instanciation = SingletonWithDependency<U>::instance();
+        U::instance(); // Force instantiation of the type we're depending on
         DepManager::instance().register_dependency(typeid(U).hash_code(), typeid(T).hash_code(), boost::no_property());
     }
 };
